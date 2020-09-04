@@ -1,5 +1,6 @@
 package org.springframework.batch.integration.partition;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -154,8 +155,8 @@ public class MessageChannelPartitionHandlerTests {
 		stepExecutions.add(partition2);
 		stepExecutions.add(partition3);
 		when(stepExecutionSplitter.split(any(StepExecution.class), eq(1))).thenReturn(stepExecutions);
-		when(jobExplorer.getStepExecution(eq(5L), any(Long.class))).thenReturn(partition2, partition1, partition3, partition3, partition3, partition3, partition4);
-
+		when(jobExplorer.getStepExecutionCount(any(), any())).thenReturn(3, 2, 0);
+		when(jobExplorer.getStepExecutions(eq(5L), any())).thenReturn(Arrays.asList(partition1, partition2, partition4));
 		//set
 		messageChannelPartitionHandler.setMessagingOperations(operations);
 		messageChannelPartitionHandler.setJobExplorer(jobExplorer);
@@ -198,7 +199,8 @@ public class MessageChannelPartitionHandlerTests {
 		stepExecutions.add(partition2);
 		stepExecutions.add(partition3);
 		when(stepExecutionSplitter.split(any(StepExecution.class), eq(1))).thenReturn(stepExecutions);
-		when(jobExplorer.getStepExecution(eq(5L), any(Long.class))).thenReturn(partition2, partition1, partition3);
+		when(jobExplorer.getStepExecutionCount(any(), any())).thenReturn(2);
+		when(jobExplorer.getStepExecutions(eq(5L), any())).thenReturn(Arrays.asList(partition1, partition2, partition3));
 
 		//set
 		messageChannelPartitionHandler.setMessagingOperations(operations);

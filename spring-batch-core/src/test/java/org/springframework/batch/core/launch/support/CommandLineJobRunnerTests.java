@@ -17,12 +17,7 @@ package org.springframework.batch.core.launch.support;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -521,6 +516,11 @@ public class CommandLineJobRunnerTests {
 		}
 
 		@Override
+		public int getStepExecutionCount(Collection<Long> stepExecutionIds, Collection<BatchStatus> matchingBatchStatuses) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public List<String> getJobNames() {
 			throw new UnsupportedOperationException();
 		}
@@ -548,6 +548,10 @@ public class CommandLineJobRunnerTests {
 			}
 		}
 
+		@Override
+		public Collection<StepExecution> getStepExecutions(Long jobExecutionId, Collection<Long> stepExecutionIds) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	public static class StubJobParametersConverter implements JobParametersConverter {
